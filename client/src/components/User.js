@@ -1,8 +1,5 @@
-export const formatDate = (input) => {
-    const date = new Date(input);
+import { formatDate } from "../utils/dateUtils";
 
-    return date.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-}
 
 export const User = ({
     _id,
