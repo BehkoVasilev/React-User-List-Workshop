@@ -1,9 +1,24 @@
-import { User } from "./User";
+import { useState } from "react";
 
-export const UserList = () => {
+import { User } from "./User";
+import { UserDetails } from "./UserDetails";
+import * as userService from "../services/userService";
+
+export const UserList = ({
+    users,
+}) => {
+
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    const onInfoClick = async (userId) => {
+        const user = await userService.getOne(userId);
+        setSelectedUser(user)
+    }
     return (
-        <div className="table-wrapper">
-            {/* <div className="loading-shade">
+        <>
+            {selectedUser && <UserDetails {...selectedUser}/>}
+            <div className="table-wrapper">
+                {/* <div className="loading-shade">
                 <div className="spinner"></div> */}
                 {/* <div className="table-overlap">
                     <svg
@@ -114,9 +129,10 @@ export const UserList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <User />
+                        {users.map(user => <User key={user._id} {...user} onInfoClick={onInfoClick}/>)}
                     </tbody>
                 </table>
-        </div>
+            </div>
+        </>
     );
 };

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as userService from './services/userService';
 
@@ -10,6 +10,8 @@ import { UserList } from "./components/UserList";
 
 
 function App() {
+    const [users, setUsers] = useState([]);
+
     useEffect(() => {
         // async function getUsers() {
         //   const users = await userService.getAll();
@@ -17,9 +19,10 @@ function App() {
         // };
         // getUsers()
         userService.getAll()
-            .then(users => {
-                console.log(users);
-            })
+            .then(setUsers)
+            // .then(users => {
+            //     setUsers(users);
+            // })
             .catch(err => {
                 console.log('Error' + err);
             })
@@ -31,7 +34,7 @@ function App() {
             <main className="main">
                 <section className="card users-container">
                     <Search />
-                    <UserList />
+                    <UserList users={users} />
                 </section>
             </main>
             <Footer />

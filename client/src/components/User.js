@@ -1,16 +1,30 @@
-export const User = (props) => {
+export const formatDate = (input) => {
+    const date = new Date(input);
+
+    return date.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+}
+
+export const User = ({
+    _id,
+    firstName,
+    lastName,
+    email,
+    imageUrl,
+    createdAt,
+    phoneNumber,
+    onInfoClick
+}) => {
     return (
         <tr>
             <td>
-                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                    alt="Peter's profile" className="image" />
+                <img src={imageUrl}
+                    alt={firstName} className="image" />
             </td>
-            <td>Peter</td>
-            <td>Johnson</td>
-            <td>peter@abv.bg</td>
-            <td>0812345678</td>
-            <td>June 28, 2022</td>
-
+            <td>{firstName}</td>
+            <td>{lastName}</td>
+            <td>{email}</td>
+            <td>{phoneNumber}</td>
+            <td>{formatDate(createdAt)}</td>
             <td className="actions">
                 <button className="btn edit-btn" title="Edit">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square"
@@ -29,7 +43,7 @@ export const User = (props) => {
                         </path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info">
+                <button className="btn info-btn" title="Info" onClick={() => onInfoClick(_id)}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info"
                         className="svg-inline--fa fa-info" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="-150 0 512 612">
