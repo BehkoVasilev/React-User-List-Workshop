@@ -11,10 +11,12 @@ export const UserList = ({
     users,
     onUserCreate,
     onUserDelete,
+    onUserUpdateSubmit,
 }) => {
 
     const [selectedUser, setSelectedUser] = useState(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+    const [showEditUser, setShowEditUser] = useState(null);
     const [showAddUserForm, setShowAddUserForm] = useState(false);
 
     const onInfoClick = async (userId) => {
@@ -26,6 +28,7 @@ export const UserList = ({
         setSelectedUser(null);
         setShowAddUserForm(false);
         setShowDeleteConfirm(null);
+        setShowEditUser(null);
     };
 
     const onUserAddClick = () => {
@@ -34,6 +37,11 @@ export const UserList = ({
 
     const onUserCreateHandler = (e) => {
         onUserCreate(e);
+        onClose();
+    };
+
+    const onUserUpdateHandler = (e, userId) => {
+        onUserUpdateSubmit(e, userId);
         onClose();
     };
 
@@ -46,11 +54,18 @@ export const UserList = ({
         onClose();
     }
 
+    const onEditClick = async (userId) => {
+        const user = await userService.getOne(userId);
+        
+        setShowEditUser(user)
+    }
+
     return (
         <>
             {selectedUser && <UserDetails {...selectedUser} onClose={onClose} />}
             {showAddUserForm && <UserCreate onClose={onClose} onUserCreate={onUserCreateHandler} />}
             {showDeleteConfirm && <UserDelete onClose={onClose} onUserDelete={onDeleteHandler} />}
+            {showEditUser && <UserCreate user={showEditUser} onClose={onClose} onUserCreate={onUserUpdateHandler} />}
             <div className="table-wrapper">
                 {/* <div className="loading-shade">
                 <div className="spinner"></div> */}
@@ -168,6 +183,7 @@ export const UserList = ({
                             {...user}
                             onInfoClick={onInfoClick}
                             onDeleteClick={onDeleteClick}
+                            onEditClick={onEditClick}
                         />)}
                     </tbody>
                 </table>

@@ -37,8 +37,19 @@ function App() {
         //send ajax request to server
         const result = await userService.createUser(data);
         //if successfull add new user to the state
-        setUsers(state => [...state, result.user])
+        setUsers(state => [...state, result])
     };
+
+    const onUserUpdateSubmit = async (e, userId) => {
+         e.preventDefault();
+
+         const formData = new FormData(e.currentTarget);
+         const data = Object.fromEntries(formData);
+
+         const updatedUser = await userService.updateUser(userId, data);
+
+        setUsers(state => state.map(x => x._id === userId ? updatedUser : x))
+    }
 
     const onUserDelete = async (userId) => {
         //delete from server
@@ -56,6 +67,7 @@ function App() {
                     <UserList
                         users={users}
                         onUserCreate={onUserCreate}
+                        onUserUpdateSubmit={onUserUpdateSubmit}
                         onUserDelete={onUserDelete}
                     />
                 </section>

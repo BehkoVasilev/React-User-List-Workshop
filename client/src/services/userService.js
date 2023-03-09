@@ -1,47 +1,69 @@
 const baseUrl = 'http://localhost:3005/api/users';
 
 export const getAll = async () => {
-  const response = await fetch(baseUrl);
-  const result = await response.json();
+    const response = await fetch(baseUrl);
+    const result = await response.json();
 
-  return result.users;
+    return result.users;
 }
 
 export const getOne = async (id) => {
-  const response = await fetch(`${baseUrl}/${id}`);
-  const result = await response.json();
+    const response = await fetch(`${baseUrl}/${id}`);
+    const result = await response.json();
 
-  return result.user;
+    return result.user;
 }
 
 export const createUser = async (userData) => {
-  const { country, city, street, streetNumber, ...data } = userData;
-  data.address = {
-    country,
-    city,
-    street,
-    streetNumber
-  }
+    const { country, city, street, streetNumber, ...data } = userData;
+    data.address = {
+        country,
+        city,
+        street,
+        streetNumber
+    }
 
-  const response = await fetch(baseUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
+    const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-  return response.json();
+    const result = await response.json();
+
+    return result.user;
 };
 
 export const deleteUser = async (userId) => {
-  const response = await fetch(`${baseUrl}/${userId}`, {
-    method: 'DELETE'
-  });
+    const response = await fetch(`${baseUrl}/${userId}`, {
+        method: 'DELETE'
+    });
 
-  return response.json()
+    return response.json()
 };
+
+export const updateUser = async (userId, userData) => {
+    const { country, city, street, streetNumber, ...data } = userData;
+    data.address = {
+        country,
+        city,
+        street,
+        streetNumber
+    }
+    const response = await fetch(`${baseUrl}/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    return result.user
+}
