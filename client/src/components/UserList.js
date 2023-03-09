@@ -8,6 +8,7 @@ import { UserCreate } from "./UserCreate";
 
 export const UserList = ({
     users,
+    onUserCreate,
 }) => {
 
     const [selectedUser, setSelectedUser] = useState(null);
@@ -27,10 +28,15 @@ export const UserList = ({
         setShowAddUserForm(true);
     }
 
+    const onUserCreateHandler = (e) => {
+        onUserCreate(e);
+        onClose()
+    }
+
     return (
         <>
             {selectedUser && <UserDetails {...selectedUser} onClose={onClose} />}
-            {showAddUserForm && <UserCreate onClose={onClose} />}
+            {showAddUserForm && <UserCreate onClose={onClose} onUserCreate={onUserCreateHandler}/>}
             <div className="table-wrapper">
                 {/* <div className="loading-shade">
                 <div className="spinner"></div> */}
