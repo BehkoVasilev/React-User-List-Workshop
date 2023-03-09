@@ -3,12 +3,15 @@ import { useState } from "react";
 import { User } from "./User";
 import { UserDetails } from "./UserDetails";
 import * as userService from "../services/userService";
+import { UserCreate } from "./UserCreate";
+
 
 export const UserList = ({
     users,
 }) => {
 
     const [selectedUser, setSelectedUser] = useState(null);
+    const [showAddUserForm, setShowAddUserForm] = useState(false);
 
     const onInfoClick = async (userId) => {
         const user = await userService.getOne(userId);
@@ -17,11 +20,17 @@ export const UserList = ({
 
     const onClose = () => {
         setSelectedUser(null);
+        setShowAddUserForm(false);
+    }
+
+    const onUserAddClick = () => {
+        setShowAddUserForm(true);
     }
 
     return (
         <>
-            {selectedUser && <UserDetails {...selectedUser} onClose={onClose}/>}
+            {selectedUser && <UserDetails {...selectedUser} onClose={onClose} />}
+            {showAddUserForm && <UserCreate onClose={onClose} />}
             <div className="table-wrapper">
                 {/* <div className="loading-shade">
                 <div className="spinner"></div> */}
@@ -134,10 +143,11 @@ export const UserList = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map(user => <User key={user._id} {...user} onInfoClick={onInfoClick}/>)}
+                        {users.map(user => <User key={user._id} {...user} onInfoClick={onInfoClick} />)}
                     </tbody>
                 </table>
             </div>
+            <button className="btn-add btn" onClick={onUserAddClick}>Add new user</button>
         </>
     );
 };

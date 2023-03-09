@@ -13,3 +13,19 @@ export const getOne = async (id) => {
     
     return result.user;
 }
+
+export const addOne = async (data) => {
+    const response = await fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+  
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  
+    return response.json();
+  };
