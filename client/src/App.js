@@ -37,9 +37,15 @@ function App() {
         //send ajax request to server
         const result = await userService.createUser(data);
         //if successfull add new user to the state
-         setUsers(state => [...state, result.user])
+        setUsers(state => [...state, result.user])
     };
 
+    const onUserDelete = async (userId) => {
+        //delete from server
+        await userService.deleteUser(userId)
+        //delete from state
+        setUsers(state => state.filter(x => x._id !== userId));
+    }
 
     return (
         <>
@@ -47,7 +53,11 @@ function App() {
             <main className="main">
                 <section className="card users-container">
                     <Search />
-                    <UserList users={users} onUserCreate={onUserCreate}/>
+                    <UserList
+                        users={users}
+                        onUserCreate={onUserCreate}
+                        onUserDelete={onUserDelete}
+                    />
                 </section>
             </main>
             <Footer />
