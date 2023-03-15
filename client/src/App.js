@@ -99,14 +99,9 @@ function App() {
     }, []);
 
     const onUserCreate = async (e) => {
-        //stop automatic form submit
         e.preventDefault();
-        //take form data from DOM tree
-        const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData);
-        //send ajax request to server
-        const result = await userService.createUser(data);
-        //if successfull add new user to the state
+
+        const result = await userService.createUser(formValues);
         setUsers(state => [...state, result])
     };
 

@@ -37,6 +37,7 @@ export const UserCreate = ({
                     value={formValues.firstName}
                     onChange={formChangeHandler}
                     onBlur={formValidate}
+                    style={formErrors.firstName ? { borderColor: "red" } : {}}
                   />
                 </div>
                 {formErrors.firstName &&
@@ -56,6 +57,7 @@ export const UserCreate = ({
                     value={formValues.lastName}
                     onChange={formChangeHandler}
                     onBlur={formValidate}
+                    style={formErrors.lastName ? { borderColor: "red" } : {}}
                   />
                 </div>
                 {formErrors.lastName &&
@@ -79,6 +81,7 @@ export const UserCreate = ({
                     value={formValues.email}
                     onChange={formChangeHandler}
                     onBlur={formValidate}
+                    style={formErrors.email ? { borderColor: "red" } : {}}
                   />
                 </div>
                 {formErrors.email &&
@@ -98,6 +101,7 @@ export const UserCreate = ({
                     value={formValues.phoneNumber}
                     onChange={formChangeHandler}
                     onBlur={formValidate}
+                    style={formErrors.phoneNumber ? { borderColor: "red" } : {}}
                   />
                 </div>
                 {formErrors.phoneNumber &&
@@ -119,6 +123,7 @@ export const UserCreate = ({
                   value={formValues.imageUrl}
                   onChange={formChangeHandler}
                   onBlur={formValidate}
+                  style={formErrors.imageUrl ? { borderColor: "red" } : {}}
                 />
               </div>
               {formErrors.imageUrl &&
@@ -140,6 +145,7 @@ export const UserCreate = ({
                     value={formValues.country}
                     onChange={formChangeHandler}
                     onBlur={formValidate}
+                    style={formErrors.country ? { borderColor: "red" } : {}}
                   />
                 </div>
                 {formErrors.country &&
@@ -159,6 +165,7 @@ export const UserCreate = ({
                     value={formValues.city}
                     onChange={formChangeHandler}
                     onBlur={formValidate}
+                    style={formErrors.city ? { borderColor: "red" } : {}}
                   />
                 </div>
                 {formErrors.city &&
@@ -181,6 +188,7 @@ export const UserCreate = ({
                     value={formValues.street}
                     onChange={formChangeHandler}
                     onBlur={formValidate}
+                    style={formErrors.street ? { borderColor: "red" } : {}}
                   />
                 </div>
                 {formErrors.street &&
@@ -200,6 +208,7 @@ export const UserCreate = ({
                     value={formValues.streetNumber}
                     onChange={formChangeHandler}
                     onBlur={formValidate}
+                    style={formErrors.streetNumber ? { borderColor: "red" } : {}}
                   />
                 </div>
                 {formErrors.streetNumber &&
