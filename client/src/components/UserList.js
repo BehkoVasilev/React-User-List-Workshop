@@ -5,6 +5,7 @@ import { UserDetails } from "./UserDetails";
 import * as userService from "../services/userService";
 import { UserCreate } from "./UserCreate";
 import { UserDelete } from "./UserDelete";
+import { Pagination } from "./Pagination";
 
 
 export const UserList = ({
@@ -12,6 +13,10 @@ export const UserList = ({
     onUserCreate,
     onUserDelete,
     onUserUpdateSubmit,
+    formValues,
+    formChangeHandler,
+    formErrors,
+    formValidate
 }) => {
 
     const [selectedUser, setSelectedUser] = useState(null);
@@ -56,16 +61,35 @@ export const UserList = ({
 
     const onEditClick = async (userId) => {
         const user = await userService.getOne(userId);
-        
+
         setShowEditUser(user)
     }
 
     return (
         <>
             {selectedUser && <UserDetails {...selectedUser} onClose={onClose} />}
-            {showAddUserForm && <UserCreate onClose={onClose} onUserCreate={onUserCreateHandler} />}
+            {showAddUserForm &&
+                <UserCreate
+                    onClose={onClose}
+                    onUserCreate={onUserCreateHandler}
+                    formValues={formValues}
+                    formChangeHandler={formChangeHandler}
+                    formErrors={formErrors}
+                    formValidate={formValidate}
+                />
+            }
             {showDeleteConfirm && <UserDelete onClose={onClose} onUserDelete={onDeleteHandler} />}
-            {showEditUser && <UserCreate user={showEditUser} onClose={onClose} onUserCreate={onUserUpdateHandler} />}
+            {showEditUser &&
+                <UserCreate
+                    user={showEditUser}
+                    onClose={onClose}
+                    onUserCreate={onUserUpdateHandler}
+                    formValues={formValues}
+                    formChangeHandler={formChangeHandler}
+                    formErrors={formErrors}
+                    formValidate={formValidate}
+                />
+            }
             <div className="table-wrapper">
                 {/* <div className="loading-shade">
                 <div className="spinner"></div> */}
@@ -189,6 +213,7 @@ export const UserList = ({
                 </table>
             </div>
             <button className="btn-add btn" onClick={onUserAddClick}>Add new user</button>
+            <Pagination />
         </>
     );
 };
